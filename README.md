@@ -1,3 +1,3 @@
 # Projeto-Java
 
-git clone https://github.com/KenzoSant/smart-parking-front.git
+git clone https://github.com/victormarinho1/Projeto-Java.git
