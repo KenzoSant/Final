@@ -1,0 +1,175 @@
+/* Estilização principal da UserPage */
+.userPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.user-container-info {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  width: 100%;
+  color: var(--second-color-dark);
+  margin: 2rem 0 2rem 0;
+}
+
+.user-container-info p {
+  margin-top: 10px;
+}
+
+.userPage h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.vehicle-block {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-block p {
+  margin: 5px 0;
+}
+
+
+/* Seção de adicionar veículo */
+.add-vehicle {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin: 2rem 0 2rem 0;
+}
+
+.add-vehicle h2,
+.user-container-info h2 {
+  font-size: 1.5rem;
+  color: var(--second-color);
+  margin-bottom: 15px;
+}
+
+.add-vehicle input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.add-vehicle input:focus {
+  border-color: var(--primary-color-dark);
+}
+
+.add-vehicle button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--second-color);
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-vehicle button:hover {
+  background-color: var(--second-color-hover);
+}
+
+/* Botão de logout */
+.logout-button, .alterar{
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 3.5rem;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.alterar {
+  background-color: var(--second-color);
+  margin-bottom: 0;
+  margin-top:1rem;
+  width: 100%;
+}
+
+.logout-button:hover {
+  background-color: var(--second-color-hover);
+}
+
+input {
+  border: 2px solid var(--second-color);
+  border-radius: 10px;
+  padding: 10px; 
+  height: 40px; 
+  width: 100%;
+  padding-right: 40px;
+  margin-bottom: 10px;
+}
+
+.add-vehicle select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.add-vehicle select:focus {
+  border-color: var(--primary-color-dark);
+}
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+.showPasswordButton {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #666;
+}
+
+.showPasswordButton:focus {
+  outline: none;
+}
+
+@media (min-width: 786px) {
+  .user-container-info {
+    max-width: 100%;
+  }
+  .add-vehicle {
+    max-width: 100%;
+  }
+}

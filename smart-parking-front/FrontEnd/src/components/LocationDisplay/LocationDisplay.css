@@ -1,0 +1,64 @@
+.location-display {
+    margin: 1rem 1.4rem 5rem 1.4rem;
+}
+
+.location {
+    display: flex;
+    margin: 2rem 0 2.5rem 0;
+    background-color: var(--primary-color);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.location img {
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.location-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.location-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--primary-color-dark);
+}
+
+.location-info p {
+    margin: 5px 0;
+    color: gray;
+}
+
+/* Para telas menores */
+@media (max-width: 768px) {
+    .location {
+        display: block; /* Empilhar imagem e texto em vez de usar flex */
+        text-align: center; /* Centraliza o conteúdo */
+    }
+
+    .location img {
+        width: 100%; /* Imagem ocupa 100% da largura */
+        height: auto; /* Ajusta a altura automaticamente */
+        margin: 0; /* Remove margens laterais */
+        border-radius: 12px 12px 0 0; /* Bordas arredondadas no topo da imagem */
+    }
+
+    .location-info {
+        padding: 0.5rem; /* Espaço entre a imagem e o texto */
+        text-align: center;
+    }
+
+    .location-info h3 {
+        font-size: 18px;
+    }
+
+    .location-info p {
+        font-size: 14px;
+    }
+}
+

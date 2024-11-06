@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: java_app_container
+    restart: on-failure:30
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgres-db:5432/${DB_DATABASE}
+      - spring.datasource.username=postgres
+      - spring.datasource.password=${DB_PASSWORD}
+      - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+      - spring.jpa.hibernate.ddl-auto=none
+      - string.regex=${SECRET_KEY}
+      - api.security.token.secret=JWT_SCRET:${SECRET_KEY}
+      - spring.mvc.throw-exception-if-no-handler-found=true
+      - spring.web.resources.add-mappings=false
+      - springdoc.swagger-ui.path=/docs/documentation
+      - springdoc.swagger-ui.operationsSorter=method
+      - spring.mail.host=smtp.gmail.com
+      - spring.mail.port=587
+      - spring.mail.username=${EMAIL_USERNAME}
+      - spring.mail.password=${EMAIL_PASSWORD}
+      - spring.mail.properties.mail.smtp.auth=true
+      - spring.mail.properties.mail.smtp.starttls.enable=true
+      - spring.rabbitmq.host=rabbitmq
+      - spring.rabbitmq.port=5672
+
+    networks:
+      - smart_parking
+      
+
+  postgres-db:
+    image: postgres:latest
+    container_name: smart-park-postgres
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=${DB_PASSWORD}
+    - POSTGRES_DB=${DB_DATABASE}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/migrations:/docker-entrypoint-initdb.d
+    networks:
+      - smart_parking
+    
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    hostname: rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
+    networks:
+      - smart_parking
+networks:
+  smart_parking:
+    external: true
+

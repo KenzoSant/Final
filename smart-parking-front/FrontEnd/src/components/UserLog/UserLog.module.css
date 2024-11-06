@@ -1,0 +1,110 @@
+.container {
+    max-width: 400px;
+    width: calc(100% - 2.8rem);
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.formGroup {
+    width: 100%;
+    margin: 10px 0;
+    color: var(--primary-color-dark);
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submitButton {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--second-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 1rem;
+}
+
+.submitButton:hover {
+    background-color: var(--second-color-hover);
+}
+
+.toggleButton {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    background-color: transparent;
+    color: var(--primary-color-dark);
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+.toggleButton:hover {
+    color: var(--second-color-hover);
+}
+
+.error {
+    margin-top: 15px;
+    color: rgb(255, 57, 57);
+}
+
+.success {
+    margin-top: 15px;
+    color: rgb(0, 172, 0);
+}
+
+.passwordContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.showPasswordButton {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #666;
+}
+
+.showPasswordButton:focus {
+    outline: none;
+}

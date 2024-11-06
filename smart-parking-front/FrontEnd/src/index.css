@@ -1,0 +1,113 @@
+/* ========== GOOGLE FONT ========== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+  --header-height: 3.5rem;
+
+  --first-hue: 250;
+  --sat: 66%;
+  --lig: 75%;
+  --second-hue: 219;
+
+  /* ========== GOOGLE FONT ========== */
+  --primary-color: #ffff;
+  --primary-color-dark: #000;
+  --second-color: #ff890c;
+  --second-color-hover: #d66f00;
+  --second-color-dark: #000000;
+  --background-color: #363640;
+  --background-color-transparent: #363640cb;
+
+  --detail-color: #5cccbd;
+  --detail-second-color: #96afc2;
+  --grey-color-dark: #77767B;
+
+  /* ========== FONT ========== */
+  --kami-font: 'kamikaze-font', sans-serif;
+  --body-font: 'Poppins', sans-serif;
+  --biggest-font-size: 2rem;
+  --h1-font-size: 1.75rem;
+  --h2-font-size: 1.5rem;
+  --h3-font-size: 1.25rem;
+  --normal-font-size: 1.1rem;
+  --small-font-size: .812rem;
+  --smaller-font-size: .75rem;
+  --tiny-font-size: .625rem;
+
+  /* ========== FONT WEIGHT ========== */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+
+  /* ========== Z-INDEX ========== */
+  --z-tooltip: 10;
+  --z-fixed: 100;
+  --z-modal: 1000;
+}
+
+/* ========== BASE ========== */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body,
+button,
+input,
+textarea {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+}
+
+body {
+  color: var(--primary-color);
+  background-color: var(--background-color);
+}
+
+h1,
+h2,
+h3 {
+  color: var(--primary-color);
+  font-weight: var(--font-semibold);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--second-color);
+}
+
+a:hover {
+  color: var(--second-color-dark);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.success{
+  color: green;
+}
+
+.error{
+  color: red;
+}
+
+
+
+
