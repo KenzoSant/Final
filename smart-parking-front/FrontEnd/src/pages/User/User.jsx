@@ -6,11 +6,11 @@ import UserPage from '../../components/UserPage/UserPage';
 import './User.css';
 
 const User = () => {
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
   
-  useEffect(() => {
-    console.log("Estado do usuário:", user);
-  }, [user]); 
+  // useEffect(() => {
+  //   console.log("Estado do usuário:", user);
+  // }, [user]); 
 
   return (
     <div className='user'>

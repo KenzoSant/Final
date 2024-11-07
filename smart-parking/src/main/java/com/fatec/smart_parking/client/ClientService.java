@@ -9,6 +9,9 @@ import com.fatec.smart_parking.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ClientService extends UserService{
     @Autowired
@@ -29,6 +32,15 @@ public class ClientService extends UserService{
         return this.userService.create(user);
     }
 
+    @Override
+    public List<UserDTO> findAll(){
+        List<User> clientsList = this.clientRepository.findByRole(Role.CLIENT);
+        List<UserDTO> clientsDTOList = new ArrayList();
+        for (User user : clientsList) {
+            clientsDTOList.add(convertToDTO(user));
+        }
+        return clientsDTOList;
+    }
 
 
 }

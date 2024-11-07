@@ -9,6 +9,7 @@ import com.fatec.smart_parking.payment.PaymentService;
 import com.fatec.smart_parking.user.User;
 import com.fatec.smart_parking.vehicle.Vehicle;
 import com.fatec.smart_parking.vehicle.VehicleService;
+import jakarta.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,6 +99,18 @@ public class ParkingRecordService {
         List<ParkingRecord> parkingRecords = this.parkingRecordRepository.findAllCurrent();
         return parkingRecords.stream()
                 .map(this::convertToAllDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<ParkingRecordsAverageDTO> findAllAverage(){
+        List<Tuple> parkingRecordsAverageDTOS = this.parkingRecordRepository.findAverageRecordsPerMonthAsTuple();
+        return parkingRecordsAverageDTOS.stream()
+                .map(tuple -> {
+                    Integer year = tuple.get(0, Integer.class);
+                    Integer month = tuple.get(1, Integer.class);
+                    Double averageRecordsPerMonth = tuple.get(2, Double.class);
+                    return new ParkingRecordsAverageDTO(year, month, averageRecordsPerMonth);
+                })
                 .collect(Collectors.toList());
     }
 

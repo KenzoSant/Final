@@ -14,8 +14,8 @@ const AuthProvider = ({ children }) => {
   const [vehicles, setVehicles] = useState([]);
   const [colors, setColors] = useState([]);
   const [makes, setMakes] = useState([]);
-  const [paymentHistory, setPaymentHistory] = useState([]); 
-  
+  const [paymentHistory, setPaymentHistory] = useState([]);
+
   // Estados separados para mensagens
   const [loginMessages, setLoginMessages] = useState({ success: null, error: null });
   const [registerMessages, setRegisterMessages] = useState({ success: null, error: null });
@@ -41,13 +41,25 @@ const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post('http://localhost:8080/api/v1/auth/login', { email, password });
       const token = response.data.token;
+
       if (token) {
         localStorage.setItem('token', token);
         const decodedToken = jwtDecode(token);
+
+        // Verifica se o token expirou
+        if (decodedToken.exp * 1000 < Date.now()) {
+          console.error('Token expirado.');
+          logout();
+          return;
+        }
+
         setUser(decodedToken);
-        await fetchVehicles();
+        if (decodedToken.role === 'ADMIN') {
+          navigate('/admin');
+        } else {
+          navigate('/home');
+        }
         setLoginMessages({ success: 'Login efetuado com sucesso!' });
-        navigate('/home');
       } else {
         setLoginMessages({ error: 'Erro: Token não foi retornado.' });
       }
@@ -121,7 +133,7 @@ const AuthProvider = ({ children }) => {
   // Função para buscar as cores
   const fetchColors = async () => {
     const token = localStorage.getItem('token');
-    console.log('tokencor',token);  
+    
     try {
       const response = await axios.get('http://localhost:8080/api/v1/colors', {
         headers: {
@@ -172,7 +184,7 @@ const AuthProvider = ({ children }) => {
       await axios.post('http://localhost:8080/api/v1/vehicles', vehicleData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      await fetchVehicles(); 
+      await fetchVehicles();
       setVehicleMessages({ success: 'Veículo cadastrado com sucesso!' });
     } catch (error) {
       setVehicleMessages({ error: 'Erro ao cadastrar veículo.' });
@@ -198,25 +210,24 @@ const AuthProvider = ({ children }) => {
   // Função para realizar pagamento
   const makePayment = async (plate) => {
     const token = localStorage.getItem('token');
-    const paymentData = { plate }; // Dados que serão enviados para a API
-  
-    console.log('Dados enviados para a API:', paymentData); // Exibe os dados no console
-  
+    const paymentPayload = { plate }; 
+
+    // console.log('Dados enviados para a API:', paymentPayload); // Exibe os dados no console
+
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/payments', paymentData, {
+      const response = await axios.post('http://localhost:8080/api/v1/payments', paymentPayload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
-      // Adiciona a resposta ao histórico de pagamentos
-      const paymentResponse = response.data;
-      setPaymentHistory((prevHistory) => [...prevHistory, paymentResponse]);
+
+      
+      const paymentDataResponse = response.data; 
+      setPaymentHistory((prevHistory) => [...prevHistory, paymentDataResponse]);
     } catch (error) {
       console.error('Erro ao processar pagamento:', error);
     }
   };
-  
 
   return (
     <AuthContext.Provider value={{
@@ -242,7 +253,7 @@ const AuthProvider = ({ children }) => {
       colors,
       makes,
       makePayment,
-      paymentHistory 
+      paymentHistory
     }}>
       {children}
     </AuthContext.Provider>

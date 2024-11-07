@@ -141,6 +141,27 @@ ORDER BY
     trigger_name;
 
 
+-- Media registro meses
+CREATE OR REPLACE FUNCTION calculate_average_records_per_month()
+RETURNS TABLE(year INT, month INT, average_records_per_month FLOAT) AS
+$$
+BEGIN
+    RETURN QUERY
+    SELECT
+        EXTRACT(YEAR FROM entry_time)::INT AS year,  -- Cast para INT
+        EXTRACT(MONTH FROM entry_time)::INT AS month,  -- Cast para INT
+        COUNT(*)::FLOAT / (EXTRACT(DAY FROM (date_trunc('MONTH', CURRENT_DATE) + INTERVAL '1 MONTH' - INTERVAL '1 day')))
+    FROM
+        parking_records
+    GROUP BY
+        EXTRACT(YEAR FROM entry_time),
+        EXTRACT(MONTH FROM entry_time)
+    ORDER BY
+        year,
+        month;
+END;
+$$ LANGUAGE plpgsql;
+
 --Seed
 
 INSERT INTO  users

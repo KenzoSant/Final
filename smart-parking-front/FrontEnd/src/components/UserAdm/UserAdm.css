@@ -1,0 +1,94 @@
+.user-adm {
+  display: contents;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.logout-button {
+  padding: 10px;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  background-color: #e60000;
+}
+
+.container-adm {
+  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.container-adm p{
+  color: black;
+}
+.container-adm p strong{
+  color: var(--second-color);
+}
+
+.toggle-buttons {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.toggle-button {
+  margin: 1rem 0 1rem 0;
+  padding: 10px;
+  background-color: #45a049;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.toggle-button:hover {
+  background-color: #45a049;
+}
+
+.records-container,
+.clients-container,
+.average-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.records-list,
+.clients-list,
+.average-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.record-card,
+.client-card,
+.average-card {
+  width: 100%;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.record-card p,
+.client-card p,
+.average-card p {
+  margin: 10px 0;
+}
+
+h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}

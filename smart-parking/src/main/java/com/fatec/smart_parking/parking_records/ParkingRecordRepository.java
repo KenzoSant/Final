@@ -1,5 +1,6 @@
 package com.fatec.smart_parking.parking_records;
 
+import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +13,8 @@ public interface ParkingRecordRepository extends JpaRepository<ParkingRecord, Lo
     @Query("SELECT pr FROM ParkingRecord pr JOIN pr.vehicle v WHERE pr.entryTime IS NOT NULL AND pr.exitTime IS NULL")
     List<ParkingRecord> findAllCurrent();
 
-
+    @Query(value = "SELECT * FROM calculate_average_records_per_month()", nativeQuery = true)
+    List<Tuple> findAverageRecordsPerMonthAsTuple();
 
 
 

@@ -8,27 +8,35 @@ import Nav from './components/Nav/Nav';
 import { AuthContext } from './context/AuthProvider'; 
 import UserLog from './components/UserLog/UserLog'; 
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import Admin from './pages/Admin/Admin';
 
 function App() {
   const { user } = useContext(AuthContext);
   const location = useLocation(); 
 
-  // Se o usuário não estiver logado e a rota atual não for "/forgot-password", exibe a tela de login
+  // Função para verificar se a rota requer autenticação
+  const requireAuth = (element) => {
+    return user ? element : <Navigate to="/login" />;
+  };
+
+  // Redireciona para a tela de login, exceto para a rota de esquecimento de senha
   if (!user && location.pathname !== '/forgot-password') {
     return <UserLog />;
   }
 
   return (
     <div>
+      {/* Exibe o Nav apenas se o usuário logado não for admin */}
+      {user && user.role !== "ADMIN" && <Nav />} 
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/pagar" element={<Payment />} />
-        <Route path="/historico" element={<History />} />
-        <Route path="/perfil" element={<User />} />
+        <Route path="/home" element={requireAuth(<Home />)} />
+        <Route path="/pagar" element={requireAuth(<Payment />)} />
+        <Route path="/historico" element={requireAuth(<History />)} />
+        <Route path="/perfil" element={requireAuth(<User />)} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/admin" element={requireAuth(<Admin />)} />
         <Route path="/" element={<Navigate to="/home" />} /> 
       </Routes>
-      {user && <Nav />} 
     </div>
   );
 }
