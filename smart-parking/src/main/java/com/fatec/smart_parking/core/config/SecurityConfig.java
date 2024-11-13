@@ -34,8 +34,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/v1/auth/reset-password").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/reset-password").permitAll()
                         .requestMatchers("/api/v1/parking-records/{id}").permitAll()
+                        .requestMatchers("api/v1/email-checker/**").permitAll()
                         .requestMatchers( AUTH_WHITELIST).permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

@@ -3,6 +3,7 @@ package com.fatec.smart_parking.client;
 import com.fatec.smart_parking.core.Role;
 import com.fatec.smart_parking.core.authentication.RegisterDTO;
 import com.fatec.smart_parking.core.exception.UserNotFoundException;
+import com.fatec.smart_parking.email_verificator.EmailVerificatorService;
 import com.fatec.smart_parking.user.User;
 import com.fatec.smart_parking.user.UserDTO;
 import com.fatec.smart_parking.user.UserService;
@@ -19,6 +20,9 @@ public class ClientService extends UserService{
 
     @Autowired
     private  UserService userService;
+
+    @Autowired
+    private EmailVerificatorService emailVerificatorService;
 
     @Override
     public UserDTO findByEmail(String email){

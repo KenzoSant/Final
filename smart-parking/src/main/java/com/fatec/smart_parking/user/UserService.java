@@ -4,6 +4,7 @@ import com.fatec.smart_parking.core.Role;
 
 import com.fatec.smart_parking.core.authentication.AuthenticationService;
 import com.fatec.smart_parking.core.exception.UserNotFoundException;
+import com.fatec.smart_parking.email_verificator.EmailVerificatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class UserService{
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private EmailVerificatorService emailVerificatorService;
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -48,6 +52,7 @@ public class UserService{
     public UserDTO create(User user) {
         userValidator.checkEmailExists(user.getEmail());
         userValidator.checkEmailValidity(user.getEmail());
+        this.emailVerificatorService.create(user.getEmail());
         user.setRole(Role.CLIENT);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         return convertToDTO(userRepository.save(user));

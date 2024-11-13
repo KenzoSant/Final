@@ -168,4 +168,32 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(TokenInvalidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ResponseEntity<ApiError> handleTokenInvalidException(ParkingNotPaidException exception, HttpServletRequest request) {
+        ApiError apiError = new ApiError(
+                request.getRequestURI(),
+                "Token invalid or expired token",
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmailNotVerifiedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<ApiError> handleEmailNotVerifiedException(EmailNotVerifiedException exception, HttpServletRequest request) {
+        ApiError apiError = new ApiError(
+                request.getRequestURI(),
+                "Conta desativada. Por favor, verifique seu e-mail para ativá-la.",
+                HttpStatus.FORBIDDEN.value(),
+                HttpStatus.FORBIDDEN.getReasonPhrase(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(apiError, HttpStatus.FORBIDDEN);
+    }
+
 }

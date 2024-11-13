@@ -75,6 +75,14 @@ CREATE TABLE payments (
         FOREIGN KEY (parking_prices_id) REFERENCES parking_prices (id)
 );
 
+CREATE TABLE email_verificator(
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expiration_date TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    verified BOOLEAN NOT NULL DEFAULT FALSE
+);
  
 /*///////////////// Logs//////////////// */
 CREATE TABLE user_logs (
@@ -171,6 +179,14 @@ VALUES('Administrador', 'admin@gmail.com', '$2a$10$1HVGUdEQ1y4DX10DRUKDK.z/i59K9
 INSERT INTO users
 ("name", email, "password", "role", enabled)
 VALUES('Anderson Barbosa', 'anderson.barbosa@gmail.com', '$2a$10$tUo05DzvN7VIYTq1uiRIjOM22QoCFwU/OdYeB9lzS/H38NV/fT4Pi', 'CLIENT'::public."role_type", true);
+
+INSERT INTO email_verificator
+(email, "token", expiration_date, created_at, verified)
+VALUES('anderson.barbosa@gmail.com', '5aabb59a-f601-45c3-b301-ebb74360212f', '2024-11-12 22:05:16.322', '2024-11-12 22:02:16.322', true);
+
+INSERT INTO email_verificator
+(email, "token", expiration_date, created_at, verified)
+VALUES('admin@gmail.com', 'f8cdbfcf-db04-4bf3-adeb-05196c88abfe', '2024-11-12 22:06:22.168', '2024-11-12 22:03:22.168', true);
 
 INSERT INTO users (name, email, password, role) VALUES
 ('João Silva', 'joao.silva@example.com', 'senha123', 'CLIENT'),

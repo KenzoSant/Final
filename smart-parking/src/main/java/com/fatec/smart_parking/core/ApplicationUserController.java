@@ -5,7 +5,9 @@ import com.fatec.smart_parking.core.authentication.LoginDTO;
 import com.fatec.smart_parking.core.authentication.LoginResponseDTO;
 import com.fatec.smart_parking.core.authentication.RegisterDTO;
 import com.fatec.smart_parking.core.config.TokenService;
+import com.fatec.smart_parking.core.email.EmailService;
 import com.fatec.smart_parking.core.listener.EmailSentEventDTO;
+import com.fatec.smart_parking.email_verificator.EmailVerificatorService;
 import com.fatec.smart_parking.user.User;
 
 import jakarta.validation.Valid;
@@ -39,6 +41,10 @@ public class ApplicationUserController{
     private ApplicationUserService applicationUserService;
 
     @Autowired
+    private EmailVerificatorService emailVerificatorService;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
     private final RabbitTemplate rabbitTemplate;
 
 
@@ -46,6 +52,8 @@ public class ApplicationUserController{
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid LoginDTO loginDTO) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(loginDTO.email(),loginDTO.password());
+        this.emailVerificatorService.isVerified(loginDTO.email());
+
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());

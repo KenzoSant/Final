@@ -9,6 +9,7 @@ import com.fatec.smart_parking.core.authentication.EmailResponseDTO;
 import com.fatec.smart_parking.core.authentication.RegisterDTO;
 import com.fatec.smart_parking.core.email.EmailService;
 import com.fatec.smart_parking.core.listener.EmailSentEventDTO;
+import com.fatec.smart_parking.email_verificator.EmailVerificatorService;
 import com.fatec.smart_parking.user.User;
 import com.fatec.smart_parking.user.UserDTO;
 import com.fatec.smart_parking.user.UserRepository;
@@ -30,6 +31,9 @@ public class ApplicationUserService implements UserDetailsService{
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private EmailVerificatorService emailVerificatorService;
 
 
 
