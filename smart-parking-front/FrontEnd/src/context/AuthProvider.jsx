@@ -134,7 +134,7 @@ const AuthProvider = ({ children }) => {
       await axios.post('http://localhost:8080/api/v1/auth/reset-password', {email}, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setResetPasswordMessages({ success: 'Senha alterada com sucesso!' });
+      setResetPasswordMessages({ success: 'Senha alterada com sucesso! Verifique o email' });
     } catch (error) {
       setResetPasswordMessages({ error: 'Erro ao alterar senha.' });
     } finally {

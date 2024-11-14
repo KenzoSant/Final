@@ -26,6 +26,7 @@
 .form {
     display: flex;
     flex-direction: column;
+    min-width: 100%;
 }
 
 .formGroup {

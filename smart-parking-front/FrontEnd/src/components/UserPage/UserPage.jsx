@@ -4,7 +4,7 @@ import './UserPage.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
 const UserPage = () => {
-  const { user, logout, createVehicle, vehicles, fetchVehicles, changePassword, loading, clearMessages, vehicleMessages, resetPasswordMessages } = useContext(AuthContext);
+  const { user, logout, createVehicle, vehicles, fetchVehicles, changePassword, loading, clearMessages, vehicleMessages, changePasswordMessages } = useContext(AuthContext);
   const [vehicle, setVehicle] = useState({ make: '', model: '', plate: '', year: '', color: '' });
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -17,7 +17,7 @@ const UserPage = () => {
     fetchVehicles();
     fetchColors();
     fetchMakes();
-    clearMessages('resetPasswords');
+    clearMessages('changePasswords');
     clearMessages('vehiclems');
   }, []);
 
@@ -42,8 +42,22 @@ const UserPage = () => {
     }
   };
 
+  // Valida se a nova senha atende aos critérios
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{8,}$/;
+    return regex.test(password);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validação da nova senha
+    if (!validatePassword(newPassword)) {
+      setErrorMessage('A senha deve ter no mínimo 8 caracteres, incluindo 1 letra maiúscula, 1 número e 1 caractere especial.');
+      return;
+    }
+
+    setErrorMessage('');
     changePassword(currentPassword, newPassword);
   };
 
@@ -118,8 +132,9 @@ const UserPage = () => {
               Alterar Senha
             </button>
 
-            {resetPasswordMessages.success && <div className="success">{resetPasswordMessages.success}</div>}
-            {resetPasswordMessages.error && <div className="error">{resetPasswordMessages.error}</div>}
+            {errorMessage && <div className="error">{errorMessage}</div>}
+            {changePasswordMessages.success && <div className="success">{changePasswordMessages.success}</div>}
+            {changePasswordMessages.error && <div className="error">{changePasswordMessages.error}</div>}
           </form>
         </div>
       </div>
