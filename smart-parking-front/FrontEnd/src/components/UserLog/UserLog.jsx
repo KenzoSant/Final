@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
-import styles from './UserLog.module.css';
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import EmailVerificationModal from '../EmailVerification/EmailVerification'; 
+import styles from './UserLog.module.css';
 
 const UserLog = () => {
   const { login, register, loading, clearMessages, loginMessages, registerMessages } = useContext(AuthContext);
@@ -10,8 +11,10 @@ const UserLog = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [isLogin, setIsLogin] = useState(true);
-  const [showPassword, setShowPassword] = useState(false); 
-  const [passwordError, setPasswordError] = useState(''); 
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
+  const [isVerificationModalVisible, setIsVerificationModalVisible] = useState(false);
+  const [isEmailSent, setIsEmailSent] = useState(false);
   const navigate = useNavigate();
 
   const toggleForm = () => {
@@ -27,22 +30,45 @@ const UserLog = () => {
     return regex.test(pwd);
   };
 
-  const handleSubmit = (e) => {
+  const sendVerificationEmail = async (email) => {
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/email-checker', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      if (response.ok) {
+        setIsEmailSent(true);
+      } else {
+        throw new Error('Falha ao enviar email de verificação');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar email de verificação:', error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
-
+  
     if (!isLogin && !validatePassword(trimmedPassword)) {
       setPasswordError('A senha deve ter no mínimo 8 caracteres, incluindo 1 letra maiúscula, 1 número e 1 caractere especial.');
       return;
     }
-
+  
     setPasswordError('');
-
+  
     if (isLogin) {
-      login(trimmedEmail, trimmedPassword);  
+      login(trimmedEmail, trimmedPassword);
     } else {
-      register(name, trimmedEmail, trimmedPassword);  
+      await register(name, trimmedEmail, trimmedPassword);
+  
+      // Mostra o modal de verificação de e-mail, mas não chama a API novamente
+      setIsVerificationModalVisible(true);
+      setIsEmailSent(true); // Define que o e-mail foi enviado, sem chamar novamente a API
     }
   };
 
@@ -87,7 +113,7 @@ const UserLog = () => {
 
         <div className={styles.formGroup}>
           <label htmlFor="password">Senha</label>
-          <div className={styles.passwordContainer}> 
+          <div className={styles.passwordContainer}>
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"
@@ -109,7 +135,6 @@ const UserLog = () => {
           {!isLogin && passwordError && <p className={styles.error}>{passwordError}</p>}
         </div>
 
-
         <button type="submit" className={styles.submitButton} disabled={loading}>
           {loading ? 'Carregando...' : isLogin ? 'Entrar' : 'Cadastrar'}
         </button>
@@ -128,6 +153,14 @@ const UserLog = () => {
       <button className={styles.toggleButton} onClick={() => navigate('/forgot-password')}>
         Esqueceu a senha?
       </button>
+
+      {isVerificationModalVisible && (
+        <EmailVerificationModal
+          onClose={() => setIsVerificationModalVisible(false)}
+          onResend={() => sendVerificationEmail(email)}
+          isEmailSent={isEmailSent}
+        />
+      )}
     </div>
   );
 };
