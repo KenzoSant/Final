@@ -31,14 +31,14 @@ public class EmailVerificatorService {
         return sendEmailVerificationLink(email,token);
     }
 
-    public void checkToken(String token){
+    public Boolean checkToken(String token){
         Optional<EmailVerificator> optEmail = this.emailVerificatorRepository.findByToken(token);
         if(optEmail.isPresent()){
             optEmail.get().setVerified(Boolean.TRUE);
             this.emailVerificatorRepository.save(optEmail.get());
-        }else{
-            throw new TokenInvalidException();
+            return true;
         }
+        return false;
     }
 
     public boolean isVerified (String email){
