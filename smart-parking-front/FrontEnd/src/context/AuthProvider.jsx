@@ -43,10 +43,13 @@ const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post('http://localhost:8080/api/v1/auth/login', { email, password });
       const token = response.data.token;
-  
+      
       if (token) {
         localStorage.setItem('token', token);
         const decodedToken = jwtDecode(token);
+
+        console.log("token", localStorage);
+        
   
         if (decodedToken.exp * 1000 < Date.now()) {
           console.error('Token expirado.');
@@ -112,7 +115,7 @@ const AuthProvider = ({ children }) => {
     clearMessages('changePassword');
     try {
       const token = localStorage.getItem('token');
-      await axios.put('http://localhost:8080/api/v1/auth/change-password', { currentPassword, newPassword }, {
+      await axios.put('http://localhost:8080/api/v1/users/reset-password', { currentPassword, newPassword }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setChangePasswordMessages({ success: 'Senha alterada com sucesso!' });
@@ -123,15 +126,12 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const resetPassword = async (currentPassword, newPassword) => {
+  const resetPassword = async (email) => {
     setLoading(true);
     clearMessages('resetPassword');
     try {
       const token = localStorage.getItem('token');
-      await axios.put('http://localhost:8080/api/v1/auth/reset-password', {
-        currentPassword,
-        newPassword
-      }, {
+      await axios.post('http://localhost:8080/api/v1/auth/reset-password', {email}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setResetPasswordMessages({ success: 'Senha alterada com sucesso!' });
