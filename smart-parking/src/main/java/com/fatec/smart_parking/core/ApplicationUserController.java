@@ -42,8 +42,7 @@ public class ApplicationUserController{
 
     @Autowired
     private EmailVerificatorService emailVerificatorService;
-    @Autowired
-    private EmailService emailService;
+
     @Autowired
     private final RabbitTemplate rabbitTemplate;
 
@@ -52,9 +51,8 @@ public class ApplicationUserController{
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid LoginDTO loginDTO) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(loginDTO.email(),loginDTO.password());
-        this.emailVerificatorService.isVerified(loginDTO.email());
-
         var auth = this.authenticationManager.authenticate(usernamePassword);
+        this.emailVerificatorService.isVerified(loginDTO.email());
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
         return ResponseEntity.ok(new LoginResponseDTO(token));

@@ -32,11 +32,6 @@ public class ApplicationUserService implements UserDetailsService{
     @Autowired
     private EmailService emailService;
 
-    @Autowired
-    private EmailVerificatorService emailVerificatorService;
-
-
-
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int PASSWORD_LENGTH = 12;
     private final SecureRandom secureRandom = new SecureRandom();
