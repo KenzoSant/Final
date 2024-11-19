@@ -16,7 +16,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
+.titleini{
+    color: var(--second-color);
+    margin-bottom: 1rem;
+}
 .title {
     text-align: center;
     margin-bottom: 20px;

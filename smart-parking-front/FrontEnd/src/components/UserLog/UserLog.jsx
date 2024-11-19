@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import EmailVerificationModal from '../EmailVerification/EmailVerification'; 
+import EmailVerificationModal from '../EmailVerification/EmailVerification';
 import styles from './UserLog.module.css';
 
 const UserLog = () => {
@@ -53,24 +53,29 @@ const UserLog = () => {
     e.preventDefault();
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
-  
+
     if (!isLogin && !validatePassword(trimmedPassword)) {
-      setPasswordError('A senha deve ter no mínimo 8 caracteres, incluindo 1 letra maiúscula, 1 número e 1 caractere especial.');
+      setPasswordError(
+        'A senha deve ter no mínimo 8 caracteres, incluindo 1 letra maiúscula, 1 número e 1 caractere especial.'
+      );
       return;
     }
-  
+
     setPasswordError('');
-  
+
     if (isLogin) {
       login(trimmedEmail, trimmedPassword);
     } else {
       await register(name, trimmedEmail, trimmedPassword);
-  
-      // Mostra o modal de verificação de e-mail, mas não chama a API novamente
-      setIsVerificationModalVisible(true);
-      setIsEmailSent(true); // Define que o e-mail foi enviado, sem chamar novamente a API
+
+      // Verifica sucesso no cadastro antes de enviar o e-mail de verificação
+      if (registerMessages.success) {
+        sendVerificationEmail(trimmedEmail);
+        setIsVerificationModalVisible(true);
+      }
     }
   };
+
 
   useEffect(() => {
     clearMessages(isLogin ? 'login' : 'register');
@@ -78,6 +83,7 @@ const UserLog = () => {
 
   return (
     <div className={styles.container}>
+      <h1 className={styles.titleini}>Smart-Parking</h1>
       <h1 className={styles.title}>{isLogin ? 'Login' : 'Cadastro'}</h1>
 
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -154,7 +160,8 @@ const UserLog = () => {
         Esqueceu a senha?
       </button>
 
-      {isVerificationModalVisible && (
+      // Renderização condicional do modal
+      {isVerificationModalVisible && registerMessages.success && (
         <EmailVerificationModal
           onClose={() => setIsVerificationModalVisible(false)}
           onResend={() => sendVerificationEmail(email)}

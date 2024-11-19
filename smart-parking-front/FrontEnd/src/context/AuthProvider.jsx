@@ -47,9 +47,6 @@ const AuthProvider = ({ children }) => {
       if (token) {
         localStorage.setItem('token', token);
         const decodedToken = jwtDecode(token);
-
-        console.log("token", localStorage);
-        
   
         if (decodedToken.exp * 1000 < Date.now()) {
           console.error('Token expirado.');
@@ -68,25 +65,27 @@ const AuthProvider = ({ children }) => {
         setLoginMessages({ error: 'Erro: Token não foi retornado.' });
       }
     } catch (err) {
-      console.log("ERRO", err);
+      if (err.response) {
+        const { status, data } = err.response;
   
-      // Verifique se a resposta contém a mensagem "Conta desativada"
-      if (err.response && err.response.data && err.response.data.message) {
-        const errorMessage = err.response.data.message;
-  
-        // Se a mensagem for "Conta desativada", exiba essa mensagem
-        if (errorMessage.includes('Conta desativada')) {
-          setLoginMessages({ error: errorMessage });
-        } else {
+        if (status === 401) {    
           setLoginMessages({ error: 'Email ou senha incorretos.' });
+        } else if (data && data.message) {
+          if (data.message.includes('Conta desativada')) {
+            setLoginMessages({ error: 'Email não verificado, acesse seu email para verificar' });
+          } else {
+            setLoginMessages({ error: 'Email ou senha incorretos.' });
+          }
+        } else {
+          setLoginMessages({ error: 'Ocorreu um erro inesperado. Tente novamente mais tarde.' });
         }
       } else {
-        setLoginMessages({ error: 'Email ou senha incorretos.' });
+        setLoginMessages({ error: 'Erro ao se conectar ao servidor.' });
       }
     } finally {
       setLoading(false);
     }
-  };
+  };  
   
 
   const logout = () => {
@@ -104,11 +103,16 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem('token', token);
       setRegisterMessages({ success: 'Cadastro efetuado com sucesso!' });
     } catch (err) {
-      setRegisterMessages({ error: 'Erro ao cadastrar.' });
+      if (err.response && err.response.status === 401) {
+        setRegisterMessages({ error: 'E-mail já cadastrado.' });
+      } else {
+        setRegisterMessages({ error: 'Erro ao cadastrar.' });
+      }
     } finally {
       setLoading(false);
     }
   };
+  
 
   const changePassword = async (currentPassword, newPassword) => {
     setLoading(true);
