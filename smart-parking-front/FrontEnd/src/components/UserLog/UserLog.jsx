@@ -160,7 +160,6 @@ const UserLog = () => {
         Esqueceu a senha?
       </button>
 
-      // Renderização condicional do modal
       {isVerificationModalVisible && registerMessages.success && (
         <EmailVerificationModal
           onClose={() => setIsVerificationModalVisible(false)}
