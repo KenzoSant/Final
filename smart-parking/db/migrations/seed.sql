@@ -468,11 +468,43 @@ VALUES(10, 1, '2024-09-25 10:00:00.000','2024-09-25 14:00:00.000');
 
 INSERT INTO parking_records
 (vehicles_id, parking_id, entry_time )
-VALUES(2, 1, '2024-10-24 08:00:00.000');
+VALUES(1, 1, TO_TIMESTAMP(CONCAT(CURRENT_DATE, ' 07:00:00'), 'YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO parking_records
 (vehicles_id, parking_id, entry_time)
-VALUES(5, 1, '2024-10-24 10:00:00.000');
+VALUES(2, 1, TO_TIMESTAMP(CONCAT(CURRENT_DATE, ' 07:10:00'), 'YYYY-MM-DD HH24:MI:SS'));
+
+INSERT INTO parking_records
+(vehicles_id, parking_id, entry_time )
+VALUES(3, 1, TO_TIMESTAMP(CONCAT(CURRENT_DATE, ' 07:02:00'), 'YYYY-MM-DD HH24:MI:SS'));
+
+INSERT INTO parking_records
+(vehicles_id, parking_id, entry_time )
+VALUES(4, 1, TO_TIMESTAMP(CONCAT(CURRENT_DATE, ' 07:15:00'), 'YYYY-MM-DD HH24:MI:SS'));
+
+INSERT INTO parking_records
+(vehicles_id, parking_id, entry_time )
+VALUES(5, 1, TO_TIMESTAMP(CONCAT(CURRENT_DATE, ' 07:30:00'), 'YYYY-MM-DD HH24:MI:SS'));
+
+INSERT INTO parking_records
+(vehicles_id, parking_id, entry_time )
+VALUES(6, 1, TO_TIMESTAMP(CONCAT(CURRENT_DATE, ' 07:35:00'), 'YYYY-MM-DD HH24:MI:SS'));
+
+INSERT INTO parking_records
+(vehicles_id, parking_id, entry_time )
+VALUES(7, 1, TO_TIMESTAMP(CONCAT(CURRENT_DATE, ' 07:40:00'), 'YYYY-MM-DD HH24:MI:SS'));
+
+INSERT INTO parking_records
+(vehicles_id, parking_id, entry_time )
+VALUES(8, 1, TO_TIMESTAMP(CONCAT(CURRENT_DATE, ' 07:45:00'), 'YYYY-MM-DD HH24:MI:SS'));
+
+INSERT INTO parking_records
+(vehicles_id, parking_id, entry_time )
+VALUES(9, 1, TO_TIMESTAMP(CONCAT(CURRENT_DATE, ' 07:50:00'), 'YYYY-MM-DD HH24:MI:SS'));
+
+INSERT INTO parking_records
+(vehicles_id, parking_id, entry_time )
+VALUES(10, 1, TO_TIMESTAMP(CONCAT(CURRENT_DATE, ' 07:55:00'), 'YYYY-MM-DD HH24:MI:SS'));
 
 
 
