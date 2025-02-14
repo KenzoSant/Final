@@ -10,8 +10,7 @@
 
 ## Para rodar o programa
 - Ter o Docker instalado: [Instalando o Docker no WSL.pdf](https://github.com/user-attachments/files/17451705/Instalando.o.Docker.no.WSL.pdf)
-- Baixar e seguir o passo a passo do seguinte GIT: [Projeto-Python]( https://github.com/victormarinho1/Projeto-Python.git)
-- Logo após baixar este projeto e rodar os seguintes comandos
+- Após baixar este projeto, rodar os seguintes comandos
   - ./init-system.sh
 ##
 
